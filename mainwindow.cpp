@@ -2,10 +2,16 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QString>
+#include <QXmlSimpleReader>
+#include <QTimer>
+#include <QTcpSocket>
+#include <QAbstractSocket>
 
 bool loggedIn = false;
 bool connectionEst = true;
 QString IP;
+QString port;
+QTcpSocket socket;
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -49,8 +55,20 @@ void MainWindow::on_pushButtonLog_clicked()
 
 void MainWindow::on_pushButtonConnect_clicked()
 {
+    QString answer;
+    QString connectXML;
+    connectXML = "This should be the connection establishment XML for the Terminal";
     IP = ui->lineEditIP->text();
+    socket.connectToHost(IP, 80, QIODevice::ReadWrite); //establishing connection with server
+    socket.waitForConnected();
+    bool connected = socket.state();
+    if (connected == true) {
+        answer = "Connection established!";
+        socket.write(connectXML.toLocal8Bit());}
+    else {answer = "Connection failed!";}
 
+    socket.write(connectXML.toLocal8Bit());
+    ui->textEditConnectionStatus->setText(answer);
     //Create Connection on supplied IP & Port
 
     connectionEst = true;
@@ -60,7 +78,7 @@ void MainWindow::on_pushButtonConnect_clicked()
         ui->groupBoxConnectivityStatus->setEnabled(true);
         ui->groupBoxRequests->setEnabled(true);
         ui->groupBoxResponse->setEnabled(true);
-        ui->textEditConnectionStatus->setText("Connection with: " + IP + " successfull!\n");
+        //ui->textEditConnectionStatus->setText("Connection with: " + IP + " successfull!\n");
     }
     else {ui->pushButtonLog->setEnabled(false);}
 
