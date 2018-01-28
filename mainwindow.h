@@ -20,6 +20,10 @@ private slots:
 
     void on_pushButtonConnect_clicked();
 
+    void on_pushButtonDiagnose_clicked();
+
+    void on_pushButtonRefund_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
