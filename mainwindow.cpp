@@ -1,3 +1,17 @@
+/*Created by Maximilian Nebl
+ *28.01.2018 Germany
+ * This project is for personal use only
+ *
+ * To-Do's:
+ *
+ * - remove the logic that repeats in every function and create classes
+ * - get OPI specification for creating proper XML
+ * - parse XML properly to pretty print the values not the xml
+ * - add Port & IP Scanner for multiple OS
+ * - keep on making this multi OS supported
+ *
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>

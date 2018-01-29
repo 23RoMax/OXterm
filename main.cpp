@@ -1,3 +1,8 @@
+/*Created by Maximilian Nebl
+ *28.01.2018 Germany
+ * This project is for personal use only
+ */
+
 #include "mainwindow.h"
 #include <QApplication>
 #include <QLabel>
