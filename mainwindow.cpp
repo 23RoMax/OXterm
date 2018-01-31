@@ -14,6 +14,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "connectionhandler.h"
 #include <QMessageBox>
 #include <QString>
 #include <QXmlStreamReader>
@@ -73,24 +74,31 @@ void MainWindow::on_pushButtonLog_clicked()
 
 void MainWindow::on_pushButtonConnect_clicked()
 {
+    TCP *temp;
+    temp = new TCP;
     QString status;
     QString connectXML;
+    QString response;
     connectXML = "This should be the connection establishment XML for the Terminal";
     IP = ui->lineEditIP->text();
     port = ui->lineEditPorts->text();
-    socket.connectToHost(IP, port.toInt(), QIODevice::ReadWrite); //establishing connection with server
-    socket.waitForConnected();
-    bool connected = socket.state();
-    if (connected == true) {
-        status = "Connection established with: " + IP +"!\n";
-        socket.write(connectXML.toLocal8Bit());}
-    else {status = "Connection with: " + IP +" failed!\n";}
+    response = temp->connection(IP, port, connectXML);
+    connect(temp, SIGNAL(textChanged(QString)), ui->textEditConnectionStatus, SLOT(setText(QString)));
 
-    socket.write(connectXML.toLocal8Bit());
-    ui->textEditConnectionStatus->setText(status);
+    ui->textEditResponseVerbose->setText(response);
+    ui->textEditResponsePretty->setText(response);
+
+//    socket.connectToHost(IP, port.toInt(), QIODevice::ReadWrite); //establishing connection with server
+//    socket.waitForConnected();
+//    bool connected = socket.state();
+//    if (connected == true) {
+//        status = "Connection established with: " + IP +"!\n";
+//        socket.write(connectXML.toLocal8Bit());}
+//    else {status = "Connection with: " + IP +" failed!\n";}
+//    socket.write(connectXML.toLocal8Bit());
+
     //Create Connection on supplied IP & Port
-
-    connected = true;
+    bool connected = true;
 
     if (connected == true){
         ui->pushButtonLog->setEnabled(true);
