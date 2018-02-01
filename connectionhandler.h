@@ -7,17 +7,16 @@
 #include "mainwindow.h"
 #include <QObject>
 
-class TCP : public QObject
+class ConnectionHandler : public QObject
 {
+    Q_OBJECT
 
 public:
-    QString transmit(QString const& IP, QString const& port, QString const& opi_payload);
+    //QString transmit(QString const& IP, QString const& port, QString const& opi_payload);
     QString connection(QString const& IP, QString const& port, QString const& opi_payload);
-    QString logIO(QString const& IP, QString const& port, QString const& opi_payload);
+    //QString logIO(QString const& IP, QString const& port, QString const& opi_payload);
 
-public slots:
-    void setResult(QString status);
 
 signals:
-    void textChanged(QString);
+    void statusChanged(QString);
 };

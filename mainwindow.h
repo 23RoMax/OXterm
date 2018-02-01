@@ -24,6 +24,8 @@ private slots:
 
     void on_pushButtonRefund_clicked();
 
+    //add setText slot to update UI
+
 private:
     Ui::MainWindow *ui;
 };

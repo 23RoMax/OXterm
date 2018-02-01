@@ -31,6 +31,9 @@ QString XMLreversal = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?> <CardSer
 QString XMLprint = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><CardServiceRequest ApplicationSender=\"WINPOS\" POPID=\"001\" RequestID=\"0\" RequestType=\"TicketReprint\" WorkstationID=\"1\"> <POSdata><POSTimeStamp>2018-01-28T21:39:59</POSTimeStamp></POSdata> </CardServiceRequest>";
 QString XMLpretty;
 
+ConnectionHandler *connectionHandler;
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -74,16 +77,19 @@ void MainWindow::on_pushButtonLog_clicked()
 
 void MainWindow::on_pushButtonConnect_clicked()
 {
-    TCP *temp;
-    temp = new TCP;
+    if (connectionHandler){
+        delete connectionHandler;
+        connectionHandler = NULL;
+    }
+    connectionHandler = new ConnectionHandler;
     QString status;
     QString connectXML;
     QString response;
     connectXML = "This should be the connection establishment XML for the Terminal";
     IP = ui->lineEditIP->text();
     port = ui->lineEditPorts->text();
-    response = temp->connection(IP, port, connectXML);
-    connect(temp, SIGNAL(textChanged(QString)), ui->textEditConnectionStatus, SLOT(setText(QString)));
+    response = connectionHandler->connection(IP, port, connectXML);
+    connect(connectionHandler, SIGNAL(statusChanged(QString)), ui->textEditConnectionStatus, SLOT(setText(QString)));
 
     ui->textEditResponseVerbose->setText(response);
     ui->textEditResponsePretty->setText(response);

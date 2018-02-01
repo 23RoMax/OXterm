@@ -8,7 +8,7 @@
 #include <QTcpSocket>
 #include <QAbstractSocket>
 
-QString connection(QString const& IP, QString const& port, QString const& opi_payload)
+QString ConnectionHandler::connection(QString const& IP, QString const& port, QString const& opi_payload)
 {
     QString connectXML = opi_payload;
     QTcpSocket socket;
@@ -26,7 +26,7 @@ QString connection(QString const& IP, QString const& port, QString const& opi_pa
         response = QString::fromUtf8(data);
     }
     else {status = "Connection with: " + IP +" failed!\n";}
-    emit textChanged(status);
+    emit this->statusChanged(status);
 
     return response;
 }
