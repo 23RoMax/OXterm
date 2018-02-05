@@ -18,5 +18,5 @@ public:
 
 
 signals:
-    void statusChanged(QString);
+    void statusChanged(QString status);
 };
